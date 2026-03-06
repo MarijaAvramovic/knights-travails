@@ -1,6 +1,6 @@
-// import "./styles.css";
+import "./styles.css";
 
-// 1. Funkcija koja vraća sve legalne poteze sa date pozicije
+
 export function knightMovesPossible(x, y) {
   const steps = [
     [1, 2], [1, -2], [-1, 2], [-1, -2],
@@ -99,3 +99,62 @@ function printKnightPath(start, goal) {
   }
 }
 printKnightPath([0,0], [7,7]);
+
+function calculatePath() {
+  const startInput = document.getElementById('start').value.trim();
+  const goalInput = document.getElementById('goal').value.trim();
+  const resultList = document.getElementById('path-list');
+  
+  resultList.innerHTML = ''; // clear previous
+
+  if (!startInput || !goalInput) {
+    resultList.innerHTML = '<li class="error">Enter both start and goal coordinates, idiot.</li>';
+    return;
+  }
+
+  let start, goal;
+  try {
+    start = startInput.split(',').map(n => parseInt(n.trim()));
+    goal  = goalInput.split(',').map(n => parseInt(n.trim()));
+    
+    if (start.length !== 2 || goal.length !== 2 ||
+        isNaN(start[0]) || isNaN(start[1]) || isNaN(goal[0]) || isNaN(goal[1]) ||
+        start[0] < 0 || start[0] > 7 || start[1] < 0 || start[1] > 7 ||
+        goal[0] < 0  || goal[0] > 7  || goal[1] < 0  || goal[1] > 7) {
+      throw new Error();
+    }
+  } catch {
+    resultList.innerHTML = '<li class="error">Use format like 0,0 and 7,7. Numbers 0-7 only.</li>';
+    return;
+  }
+
+  const path = knightPath(start, goal);
+
+  if (!path) {
+    resultList.innerHTML = '<li class="error">No path found (should never happen on 8×8 board...)</li>';
+    return;
+  }
+
+  const steps = path.length - 1;
+  resultList.innerHTML = `<li><span class="steps">Optimal path: ${steps} ${steps === 1 ? 'move' : 'moves'}</span></li>`;
+
+  path.forEach((pos, i) => {
+    const li = document.createElement('li');
+    li.textContent = `${i === 0 ? 'START → ' : i === path.length-1 ? 'END ← ' : ''}[${pos[0]}, ${pos[1]}]`;
+    if (i === 0) li.classList.add('start');
+    if (i === path.length-1) li.classList.add('end');
+    resultList.appendChild(li);
+  });
+}
+
+ 
+// window.onload = () => {
+//   document.getElementById('start').value = '0,0';
+//   document.getElementById('goal').value = '7,7';
+//   calculatePath();
+// };
+ 
+  const findButton = document.getElementById('find-btn');
+ 
+    findButton.addEventListener('click', calculatePath);
+ 

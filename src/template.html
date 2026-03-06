@@ -6,6 +6,35 @@
   <title>Document</title>
 </head>
 <body>
-  
+  <!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0"/>
+  <title>Knight's Travails – Shortest Path Finder</title>
+   
+</head>
+<body>
+  <div class="container">
+    <h1>Knight's Travails</h1>
+    <p class="subtitle">Find the shortest path a knight can take on an 8×8 chessboard</p>
+
+    <div class="controls">
+      <input type="text" id="start" placeholder="Start e.g. 0,0" />
+      <input type="text" id="goal" placeholder="Goal e.g. 7,7" />
+      <button id="find-btn">Find Path</button>
+    </div>
+
+    <div id="result">
+      <p>Enter coordinates (0-7) and hit the button.  </p>
+      <ul id="path-list"></ul>
+    </div>
+
+    <footer>Marija Avramovic</footer>
+  </div>
+
+  <script src="knight.js"></script>
+</body>
+</html>
 </body>
 </html>
