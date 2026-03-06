@@ -9,9 +9,9 @@ export function knightMovesPossible(x, y) {
 
   const moves = [];
 
-  for (const [sx, sy] of steps) {
-    const newX = x + sx;
-    const newY = y + sy;
+  for (const step of steps) {
+    const newX = x + step[0];
+    const newY = y + step[1];
 
     if (newX >= 0 && newX <= 7 && newY >= 0 && newY <= 7) {
       moves.push([newX, newY]);
@@ -21,4 +21,81 @@ export function knightMovesPossible(x, y) {
   return moves;
 }
 // console.log(knightMovesPossible(0,0));
-// console.log(knightMovesPossible(0,0));
+// [ [ 1, 2 ], [ 2, 1 ] ]
+// console.log(knightMovesPossible(5,6));
+// [ [ 6, 4 ], [ 4, 4 ], [ 7, 7 ], [ 7, 5 ], [ 3, 7 ], [ 3, 5 ] ]
+ 
+function knightPath(start, goal) {
+  if (start[0] === goal[0] && start[1] === goal[1]) {
+    return [start]; 
+  }
+
+  const layerBreadth = [];                
+  const visited = new Set();        
+  const mapFromWhere = new Map();         
+
+ 
+  const startStr = start.join(',');    
+  layerBreadth.push(start);
+  visited.add(startStr);
+  mapFromWhere.set(startStr, null);
+
+  let found = false;
+
+  while (layerBreadth.length > 0) {
+    const current = layerBreadth.shift();
+    const currStr = current.join(',');
+
+    if (current[0] === goal[0] && current[1] === goal[1]) {
+      found = true;
+      break;
+    }
+
+    for (const moveNode of knightMovesPossible(current[0], current[1])) {
+      const moveNodeStr = moveNode.join(',');
+
+      if (!visited.has(moveNodeStr)) {
+        visited.add(moveNodeStr);
+        layerBreadth.push(moveNode);
+        mapFromWhere.set(moveNodeStr, current);   
+      }
+    }
+  }
+
+  if (!found) {
+    return null;  
+  }
+
+  
+  const path = [];
+  let myMove = goal;
+
+  while (myMove !== null) {
+    path.push(myMove);
+    const key = myMove.join(',');
+    myMove = mapFromWhere.get(key);
+  }
+
+  path.reverse();    
+
+  return path;
+}
+
+console.log(knightPath([0,0] , [3,3]));
+
+ 
+function printKnightPath(start, goal) {
+  const path = knightPath(start, goal);
+
+  if (!path) {
+    console.log("No path.");
+    return;
+  }
+
+  console.log(`=> The optimal path is ${path.length - 1} steps! Looks like this:`);
+
+  for (let i = 0; i < path.length; i++) {
+    console.log(`${i === 0 ? 'START → ' : ''}[${path[i][0]},${path[i][1]}]`);
+  }
+}
+printKnightPath([0,0], [7,7]);
