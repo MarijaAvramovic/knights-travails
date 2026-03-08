@@ -1,4 +1,5 @@
 import "./styles.css";
+import { knightPath } from './knight-path.js';
 
 
 // console.log(knightMovesPossible(0,0));

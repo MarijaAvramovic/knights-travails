@@ -1,7 +1,7 @@
 import { knightMovesPossible } from './knight-moves.js';
 
 
-function knightPath(start, goal) {
+export function knightPath(start, goal) {
   if (start[0] === goal[0] && start[1] === goal[1]) {
     return [start]; 
   }
