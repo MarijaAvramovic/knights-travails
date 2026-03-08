@@ -1,4 +1,4 @@
-import { knightMovesPossible } from './index.js';
+import { knightMovesPossible } from './knight-moves.js';
 
  
 describe('knightMovesPossible', () => {
