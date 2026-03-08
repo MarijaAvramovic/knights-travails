@@ -1,4 +1,5 @@
-using test jest
+Link https://marijaavramovic.github.io/knights-travails/
+
 I built a JavaScript function called knightMoves that finds the shortest path a knight can take from one square to another on an 8×8 chessboard.
 
 I modeled the board as a graph where each square is a node and every legal knight jump is an edge.
@@ -13,3 +14,5 @@ When I hit the target, I backtracked through the parents to build the full path 
 
 I added basic input validation so it doesn’t explode on invalid coords like [-1,8].
  
+
+ using test jest
