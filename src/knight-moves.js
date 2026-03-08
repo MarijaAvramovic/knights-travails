@@ -18,3 +18,4 @@ export function knightMovesPossible(x, y) {
 
   return moves;
 }
+
